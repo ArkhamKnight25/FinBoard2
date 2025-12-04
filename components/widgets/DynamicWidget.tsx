@@ -26,21 +26,23 @@ export const DynamicWidget: React.FC<DynamicWidgetProps> = ({
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const result = await fetchDynamicData(apiUrl, selectedFields);
+      setData(result);
+      setError(null);
+      setLastUpdated(new Date());
+    } catch (err: any) {
+      setError(err.message || 'Failed to load data');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await fetchDynamicData(apiUrl, selectedFields);
-        setData(result);
-        setError(null);
-      } catch (err: any) {
-        setError(err.message || 'Failed to load data');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
     const interval = setInterval(fetchData, refreshInterval);
 
@@ -153,8 +155,10 @@ export const DynamicWidget: React.FC<DynamicWidgetProps> = ({
       title={title}
       onRemove={onRemove}
       onConfigure={onConfigure}
+      onRefresh={fetchData}
       loading={loading}
       error={error || undefined}
+      lastUpdated={lastUpdated}
     >
       {displayMode === 'card' && renderCardView()}
       {displayMode === 'table' && renderTableView()}

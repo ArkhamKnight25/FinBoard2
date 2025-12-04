@@ -185,6 +185,24 @@ export const Dashboard: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {widgets.map(renderWidget)}
+            
+            {/* Add Widget Placeholder Card */}
+            <button
+              onClick={() => setIsAddModalOpen(true)}
+              className="min-h-[300px] border-2 border-dashed border-gray-700 hover:border-blue-500 rounded-xl bg-gray-800/30 hover:bg-gray-800/50 transition-all duration-200 flex flex-col items-center justify-center gap-4 group"
+            >
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-600/20 group-hover:from-blue-500/30 group-hover:to-purple-600/30 flex items-center justify-center transition-all">
+                <Plus className="w-8 h-8 text-blue-400 group-hover:scale-110 transition-transform" />
+              </div>
+              <div className="text-center">
+                <p className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">
+                  Add Widget
+                </p>
+                <p className="text-sm text-gray-400 mt-1">
+                  Click to add a new widget
+                </p>
+              </div>
+            </button>
           </div>
         )}
       </main>
