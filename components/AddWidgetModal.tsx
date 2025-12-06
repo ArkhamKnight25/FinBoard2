@@ -176,6 +176,7 @@ export const AddWidgetModal: React.FC<AddWidgetModalProps> = ({
       gainers: 'Market Gainers',
       card: 'Finance Card',
       performance: 'Performance',
+      custom: 'Custom Widget',
     };
     return titles[type];
   };
